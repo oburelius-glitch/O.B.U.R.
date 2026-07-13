@@ -1,0 +1,63 @@
+ body {
+    font-family: "Rajdhani", sans-serif;
+    background-color: #030712;
+    background-image: 
+        radial-gradient(at 50% 0%, rgba(6, 182, 212, 0.15) 0px, transparent 50%),
+        radial-gradient(at 0% 100%, rgba(14, 165, 233, 0.1) 0px, transparent 50%);
+    color: #e2e8f0;
+    overflow-x: hidden;
+}
+
+.font-terminal { font-family: "Share Tech Mono", monospace; }
+
+.neon-border {
+    box-shadow: 0 0 20px rgba(6, 182, 212, 0.1), inset 0 0 15px rgba(6, 182, 212, 0.05);
+    border: 1px solid rgba(6, 182, 212, 0.25);
+}
+
+.neon-text-glow { text-shadow: 0 0 12px rgba(6, 182, 212, 0.8); }
+.shadow-cyan { text-shadow: 0 0 8px rgba(6, 182, 212, 0.5); }
+.neon-bg-glow { background: radial-gradient(circle, rgba(6, 182, 212, 0.15) 0%, transparent 60%); }
+
+.scanlines { position: relative; overflow: hidden; }
+.scanlines::before {
+    content: " "; display: block; position: absolute; top: 0; left: 0; bottom: 0; right: 0;
+    background: linear-gradient(rgba(3, 7, 18, 0) 50%, rgba(3, 7, 18, 0.25) 50%), 
+                linear-gradient(90deg, rgba(6, 182, 212, 0.03), rgba(14, 165, 233, 0.01), transparent);
+    z-index: 10; background-size: 100% 4px, 4px 100%; pointer-events: none;
+}
+
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: rgba(6, 182, 212, 0.05); }
+::-webkit-scrollbar-thumb { background: rgba(6, 182, 212, 0.4); border-radius: 2px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(6, 182, 212, 0.8); }
+
+@keyframes spin-clockwise { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+@keyframes spin-counter { 0% { transform: rotate(360deg); } 100% { transform: rotate(0deg); } }
+@keyframes spin-fast-anim { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+@keyframes pulse-glow {
+    0%, 100% { transform: scale(1); opacity: 0.8; filter: drop-shadow(0 0 15px rgba(6, 182, 212, 0.4)); }
+    50% { transform: scale(1.03); opacity: 1; filter: drop-shadow(0 0 30px rgba(6, 182, 212, 0.9)); }
+}
+
+.spin-slow { animation: spin-clockwise 25s linear infinite; }
+.spin-reverse { animation: spin-counter 15s linear infinite; }
+.spin-fast { animation: spin-clockwise 8s linear infinite; }
+.pulse-core { animation: pulse-glow 2.5s ease-in-out infinite; }
+
+.bg-grid-dots { 
+    background-size: 25px 25px; 
+    background-image: radial-gradient(circle, rgba(6, 182, 212, 0.08) 1px, transparent 1px); 
+}
+
+.typing-cursor::after {
+    content: "█";
+    animation: blink 1s step-start infinite;
+    color: #a78bfa;
+    margin-left: 4px;
+}
+
+@keyframes blink {
+    50% { opacity: 0; }
+}

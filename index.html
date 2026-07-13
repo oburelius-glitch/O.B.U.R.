@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>O.B.U.R.</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="obur.css">
+</head>
+<body class="bg-grid-dots min-h-screen flex flex-col scanlines text-cyan-100">
+
+    <header class="w-full border-b border-cyan-900/50 bg-slate-950/60 backdrop-blur-xl px-6 py-3 flex flex-wrap items-center justify-between z-20 shrink-0 shadow-[0_4px_30px_rgba(6,182,212,0.1)]">
+        <div class="flex items-center space-x-4">
+            <div class="relative flex items-center justify-center w-10 h-10">
+                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-20"></span>
+                <div class="absolute inset-0 border border-cyan-500/50 rounded-full spin-slow"></div>
+                <i class="fa-solid fa-bolt text-cyan-400 text-xl neon-text-glow"></i>
+            </div>
+            <div>
+                <h1 class="text-2xl font-bold tracking-widest text-cyan-400 uppercase font-terminal flex items-center gap-3">
+                    O.B.U.R. <span class="text-[10px] bg-cyan-950/80 border border-cyan-400/40 px-2 py-0.5 rounded-sm text-cyan-300 tracking-widest">v3.1</span>
+                </h1>
+                <p class="text-[10px] text-cyan-500 tracking-widest uppercase">Kognitif Yerel Çekirdek Ağı</p>
+            </div>
+        </div>
+
+        <div class="flex items-center space-x-6 text-xs text-cyan-400 font-terminal mt-2 sm:mt-0">
+            <div class="flex items-center space-x-2 border-r border-cyan-900/50 pr-4">
+                <span class="text-cyan-600">VERİTABANI:</span>
+                <span id="memory-count" class="text-sky-300 font-bold">0 BAYT</span>
+            </div>
+            <div class="flex items-center space-x-2 border-r border-cyan-900/50 pr-4">
+                <span class="text-cyan-600">SİSTEM:</span>
+                <span class="flex items-center gap-1.5 text-cyan-300 animate-pulse">
+                    <span class="w-2 h-2 rounded-full bg-cyan-400 shadow-[0_0_8px_#22d3ee]"></span> AKTİF
+                </span>
+            </div>
+            <div class="flex items-center space-x-2">
+                <i class="fa-solid fa-crosshairs text-cyan-500 spin-slow"></i>
+                <span id="hud-clock" class="text-sm font-semibold tracking-widest text-cyan-200">00:00:00</span>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-1 w-full max-w-7xl mx-auto p-4 grid grid-cols-1 lg:grid-cols-12 gap-6 relative z-10 overflow-y-auto pb-8">
+        
+        <section class="lg:col-span-3 flex flex-col space-y-6">
+            
+            <div class="neon-border rounded-2xl bg-slate-950/40 backdrop-blur-xl p-6 flex flex-col items-center justify-center relative overflow-hidden group min-h-[320px]">
+                <div class="absolute inset-0 neon-bg-glow opacity-40"></div>
+                
+                <div class="absolute top-3 left-3 w-4 h-4 border-t-2 border-l-2 border-cyan-500/50"></div>
+                <div class="absolute top-3 right-3 w-4 h-4 border-t-2 border-r-2 border-cyan-500/50"></div>
+                <div class="absolute bottom-3 left-3 w-4 h-4 border-b-2 border-l-2 border-cyan-500/50"></div>
+                <div class="absolute bottom-3 right-3 w-4 h-4 border-b-2 border-r-2 border-cyan-500/50"></div>
+
+                <div class="absolute top-4 text-[10px] font-terminal text-cyan-500 uppercase tracking-widest text-center w-full">Ana Reaktif Merkez</div>
+                
+                <div class="relative w-48 h-48 flex items-center justify-center cursor-pointer mt-4" onclick="triggerVoiceAssistant()">
+                    <div class="absolute inset-0 border-[3px] border-cyan-900/40 border-t-cyan-400 border-b-cyan-500 rounded-full spin-slow"></div>
+                    <div class="absolute inset-2 border-2 border-dashed border-cyan-500/30 rounded-full spin-reverse"></div>
+                    <div class="absolute inset-5 border-[4px] border-cyan-900/60 border-l-cyan-300 rounded-full spin-fast"></div>
+                    <div class="absolute inset-8 border border-cyan-300/20 rounded-full animate-pulse"></div>
+                    
+                    <div id="obur-core" class="w-20 h-20 rounded-full bg-cyan-500/10 border-2 border-cyan-400/80 flex items-center justify-center pulse-core shadow-[0_0_30px_rgba(6,182,212,0.5)] transition-all duration-300 hover:scale-105 hover:bg-cyan-500/20 backdrop-blur-md">
+                        <i id="core-icon" class="fa-solid fa-wave-square text-3xl text-cyan-200"></i>
+                    </div>
+                </div>
+
+                <div class="mt-6 text-center z-10">
+                    <p id="core-status" class="text-sm font-bold tracking-widest text-cyan-300 font-terminal uppercase shadow-cyan">BEKLEMEDE</p>
+                    <p class="text-[9px] text-cyan-600 uppercase mt-2 tracking-widest">Manuel Tetikleyici: Space</p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-3">
+                <div class="neon-border rounded-xl bg-slate-950/40 backdrop-blur-xl p-4 flex flex-col justify-center items-center">
+                    <i class="fa-solid fa-microchip text-cyan-500 text-lg mb-2"></i>
+                    <span class="text-[9px] text-cyan-600 font-terminal uppercase tracking-widest">CPU Yükü</span>
+                    <span id="cpu-widget" class="text-lg font-bold text-cyan-300 font-terminal mt-1">12%</span>
+                </div>
+                <div class="neon-border rounded-xl bg-slate-950/40 backdrop-blur-xl p-4 flex flex-col justify-center items-center">
+                    <i class="fa-solid fa-memory text-cyan-500 text-lg mb-2"></i>
+                    <span class="text-[9px] text-cyan-600 font-terminal uppercase tracking-widest">Bellek</span>
+                    <span id="ram-widget" class="text-lg font-bold text-cyan-300 font-terminal mt-1">2.4 GB</span>
+                </div>
+                <div class="neon-border rounded-xl bg-slate-950/40 backdrop-blur-xl p-4 flex flex-col justify-center items-center col-span-2">
+                    <i class="fa-solid fa-temperature-half text-cyan-500 text-lg mb-2"></i>
+                    <span class="text-[9px] text-cyan-600 font-terminal uppercase tracking-widest">Sıcaklık Durumu</span>
+                    <span id="temp-widget" class="text-lg font-bold text-cyan-300 font-terminal mt-1">45°C</span>
+                    <div class="w-full bg-cyan-950 rounded-full h-1 mt-2">
+                        <div class="bg-cyan-400 h-1 rounded-full" style="width: 45%"></div>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+        <section class="lg:col-span-6 flex flex-col space-y-4 h-[75vh] min-h-[500px]">
+            <div class="neon-border rounded-2xl bg-slate-950/50 backdrop-blur-xl p-5 flex flex-col flex-1 overflow-hidden relative shadow-[0_8px_32px_rgba(0,0,0,0.3)]">
+                
+                <div class="flex items-center justify-between border-b border-cyan-900/50 pb-3 shrink-0">
+                    <div class="flex items-center space-x-3">
+                        <i class="fa-solid fa-terminal text-cyan-500 text-sm"></i>
+                        <span class="text-xs font-bold tracking-widest text-cyan-300 font-terminal uppercase">Ana İletişim Terminali</span>
+                    </div>
+                    <div class="flex items-center space-x-3">
+                        <button id="voice-response-toggle" onclick="toggleVoiceResponse()" class="text-[10px] uppercase tracking-widest flex items-center space-x-1.5 px-3 py-1.5 rounded bg-cyan-950/40 border border-cyan-500/30 hover:bg-cyan-900/60 text-cyan-300 transition-all">
+                            <i id="voice-response-icon" class="fa-solid fa-volume-high"></i>
+                            <span id="voice-response-text">Ses: ON</span>
+                        </button>
+                        <button onclick="clearChatLog()" class="text-cyan-600 hover:text-cyan-400 text-[10px] uppercase tracking-widest transition-colors">
+                            <i class="fa-solid fa-eraser"></i> Temizle
+                        </button>
+                        <button onclick="resetMemory()" class="text-amber-500 hover:text-amber-400 text-[10px] uppercase tracking-widest transition-colors border-l border-cyan-900/50 pl-3 ml-1">
+                            <i class="fa-solid fa-triangle-exclamation"></i> Format
+                        </button>
+                    </div>
+                </div>
+
+                <div id="messages-container" class="flex-1 overflow-y-auto py-4 space-y-5 px-2">
+                </div>
+
+                <div class="border-t border-cyan-900/50 pt-4 shrink-0">
+                    <form id="chat-form" onsubmit="handleChatSubmit(event)" class="relative flex items-center">
+                        <button type="button" onclick="triggerVoiceAssistant()" id="mic-btn" class="absolute left-2 w-10 h-10 rounded-full bg-slate-900 hover:bg-cyan-950 text-cyan-400 flex items-center justify-center border border-cyan-500/30 transition-all duration-300 z-10">
+                            <i id="mic-icon" class="fa-solid fa-microphone-lines"></i>
+                        </button>
+                        
+                        <input type="text" id="chat-input" placeholder="O.B.U.R.'a talimat verin..." class="w-full bg-slate-950/80 border border-cyan-900/60 focus:border-cyan-400 text-cyan-100 placeholder-cyan-800 rounded-full pl-14 pr-14 py-3.5 text-sm focus:outline-none focus:ring-1 focus:ring-cyan-500/50 transition-all font-sans backdrop-blur-md" autocomplete="off" />
+                        
+                        <button type="submit" class="absolute right-2 w-10 h-10 rounded-full bg-cyan-500 hover:bg-cyan-400 text-slate-950 flex items-center justify-center transition-all duration-300 shadow-[0_0_15px_rgba(6,182,212,0.6)] z-10">
+                            <i class="fa-solid fa-paper-plane text-sm"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <section class="lg:col-span-3 flex flex-col space-y-6">
+            
+            <div class="neon-border rounded-2xl bg-slate-950/40 backdrop-blur-xl p-5 flex flex-col">
+                <h3 class="text-[10px] font-bold text-cyan-400 uppercase tracking-widest font-terminal border-b border-cyan-900/50 pb-2 mb-3 flex justify-between">
+                    <span>Holo-Projeksiyon</span>
+                    <i class="fa-solid fa-cubes text-cyan-500"></i>
+                </h3>
+
+                <div class="space-y-4">
+                    <div class="w-full aspect-video rounded-lg border border-cyan-800/50 bg-slate-950/80 flex flex-col items-center justify-center relative overflow-hidden group scanlines">
+                        <img id="generated-image" class="w-full h-full object-cover hidden" alt="Hologram Çıktısı">
+                        
+                        <div id="image-placeholder" class="text-center p-4">
+                            <div class="relative w-12 h-12 mx-auto mb-2 flex justify-center items-center">
+                                <div class="absolute inset-0 border border-cyan-500/40 rounded-sm spin-slow"></div>
+                                <div class="absolute inset-1 border border-cyan-400/20 rounded-sm spin-reverse"></div>
+                                <i class="fa-brands fa-connectdevelop text-cyan-500 text-2xl animate-pulse"></i>
+                            </div>
+                            <p class="text-[9px] text-cyan-600 font-terminal uppercase tracking-widest">Görüntü Bekleniyor</p>
+                        </div>
+                    </div>
+
+                    <div class="flex gap-2">
+                        <input type="text" id="image-prompt" placeholder="Görsel parametreleri..." class="flex-1 bg-slate-950/60 border border-cyan-900 focus:border-cyan-500 text-cyan-100 text-xs px-3 py-2 rounded focus:outline-none focus:ring-1 focus:ring-cyan-500/40 font-sans" />
+                        <button onclick="triggerImageGeneration()" id="btn-generate-image" class="bg-cyan-600 hover:bg-cyan-500 text-slate-950 px-4 rounded text-xs font-semibold flex items-center justify-center transition-colors shadow-[0_0_10px_rgba(6,182,212,0.4)]">
+                            <i class="fa-solid fa-code-commit"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="neon-border rounded-2xl bg-slate-950/40 backdrop-blur-xl p-5 flex-1 flex flex-col">
+                <h3 class="text-[10px] font-bold text-cyan-400 uppercase tracking-widest font-terminal border-b border-cyan-900/50 pb-2 mb-3 flex justify-between">
+                    <span>Nöral Ağ İndeksi</span>
+                    <i class="fa-solid fa-network-wired text-cyan-500"></i>
+                </h3>
+                
+                <div class="space-y-2 text-[10px] text-cyan-300 font-terminal flex-1">
+                    <ul id="memory-list" class="pl-2 space-y-1.5 h-32 overflow-y-auto border-l border-cyan-900/50">
+                    </ul>
+                </div>
+
+                <div class="mt-4 border-t border-cyan-900/30 pt-3">
+                    <span class="text-cyan-600 uppercase text-[9px] block mb-1.5 font-terminal tracking-widest">Protokol Akışı</span>
+                    <div id="system-events-log" class="text-[9px] font-terminal text-cyan-400/60 h-20 overflow-y-auto space-y-1 bg-slate-950/80 p-2 rounded border border-cyan-900/40">
+                        <div>&gt; MARK III Sistemleri devrede.</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div id="toast" class="fixed bottom-4 right-4 neon-border bg-slate-950/90 text-cyan-300 text-xs py-3 px-5 rounded-lg shadow-[0_0_20px_rgba(6,182,212,0.5)] z-50 flex items-center space-x-3 transition-all duration-300 transform translate-y-20 opacity-0 backdrop-blur-md">
+        <i id="toast-icon" class="fa-solid fa-circle-info text-cyan-400 text-base"></i>
+        <span id="toast-message" class="font-terminal tracking-wide">Bildirim</span>
+    </div>
+
+    <script src="script.js" defer></script>
+</body>
+</html>
